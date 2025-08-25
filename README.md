@@ -43,7 +43,7 @@ The banana zone includes postcodes from these key areas:
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/argjendhaxhiu/londonbanana.git
 cd londonbanana
 ```
 
