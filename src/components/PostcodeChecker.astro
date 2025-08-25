@@ -22,7 +22,7 @@
         />
       </div>
       <button type="submit" class="search-btn">
-        <span class="btn-text">Search</span>
+        <span class="btn-text">Check</span>
       </button>
     </div>
   </form>
@@ -293,6 +293,89 @@
     color: rgba(0, 0, 0, 0.6);
   }
 
+  /* Dynamic result data styles */
+  .result-data {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .status-row {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .status-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.3;
+    color: white;
+  }
+
+  .postcode-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    opacity: 0.9;
+    margin: 0;
+    color: white;
+  }
+
+  .data-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .data-item {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .data-item.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .data-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .data-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    opacity: 0.8;
+    margin: 0 0 0.5rem 0;
+    color: white;
+  }
+
+  .data-value {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.2;
+    color: white;
+  }
+
+  .data-subtext {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    margin: 0;
+    color: white;
+  }
+
 
 
   @keyframes slideIn {
@@ -437,58 +520,62 @@
   const result = document.getElementById('result') as HTMLDivElement;
 
   function formatResultData(checkResult: any): string {
-    const status = checkResult.isInBanana ? '🍌 Yes! In the London Banana zone!' : '❌ Not in the London Banana zone';
+    const statusIcon = checkResult.isInBanana ? '🍌' : '❌';
+    const statusText = checkResult.isInBanana ? 'Yes! In the London Banana zone!' : 'Not in the London Banana zone';
     
+    // Status section with inline styles for guaranteed display
     let html = `
-      <div class="status-row">
-        <div class="status-text">${status}</div>
-        <div class="postcode-text">${checkResult.normalizedPostcode}</div>
+      <div style="text-align: center; padding: 1.2rem 1rem; background: rgba(255, 255, 255, 0.15); border-radius: 12px; margin-bottom: 1rem; backdrop-filter: blur(10px);">
+        <span style="font-size: 2rem; display: block; margin-bottom: 0.5rem; line-height: 1;">${statusIcon}</span>
+        <div style="font-size: 1rem; font-weight: 700; margin: 0 0 0.5rem 0; line-height: 1.3; color: white;">${statusText}</div>
+        <div style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px; opacity: 0.9; margin: 0; color: white;">${checkResult.normalizedPostcode}</div>
       </div>
     `;
 
     if (checkResult.additionalData) {
       const { housePriceAverage, crimeRate, crimeDescription, location } = checkResult.additionalData;
       
-      // Two-column row for house price and crime rate
-      if (housePriceAverage || (crimeRate !== undefined && crimeDescription)) {
-        html += `<div class="data-row">`;
-        
-        if (housePriceAverage) {
-          html += `
-            <div class="data-item">
-              <div class="data-icon">💰</div>
-              <div class="data-label">Average House Price</div>
-              <div class="data-value">£${housePriceAverage.toLocaleString()}</div>
-            </div>
-          `;
-        }
-        
-        if (crimeRate !== undefined && crimeDescription) {
-          html += `
-            <div class="data-item">
-              <div class="data-icon">🚔</div>
-              <div class="data-label">Crime Rate</div>
-              <div class="data-value">${crimeDescription}<br/>(${crimeRate}/month)</div>
-            </div>
-          `;
-        }
-        
-        html += `</div>`;
+      // Info cards with inline styles
+      let cardsHtml = '';
+      
+      if (housePriceAverage) {
+        cardsHtml += `
+          <div style="background: rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1rem; text-align: center; backdrop-filter: blur(10px);">
+            <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; line-height: 1;">💰</span>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; opacity: 0.8; margin: 0 0 0.25rem 0; color: white;">House Price</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 0 0 0.15rem 0; line-height: 1.2; color: white;">£${housePriceAverage.toLocaleString()}</div>
+            <div style="font-size: 0.75rem; opacity: 0.75; margin: 0; color: white;">Average</div>
+          </div>
+        `;
       }
       
-      // Full-width row for district
+      if (crimeRate !== undefined && crimeDescription) {
+        cardsHtml += `
+          <div style="background: rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1rem; text-align: center; backdrop-filter: blur(10px);">
+            <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; line-height: 1;">🚔</span>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; opacity: 0.8; margin: 0 0 0.25rem 0; color: white;">Crime Rate</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 0 0 0.15rem 0; line-height: 1.2; color: white;">${crimeDescription}</div>
+            <div style="font-size: 0.75rem; opacity: 0.75; margin: 0; color: white;">${crimeRate} incidents/month</div>
+          </div>
+        `;
+      }
+      
+      if (cardsHtml) {
+        html += `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">${cardsHtml}</div>`;
+      }
+      
       if (location && location.district) {
         html += `
-          <div class="data-item full-width">
-            <div class="data-icon">🏛️</div>
-            <div class="data-label">District</div>
-            <div class="data-value">${location.district}</div>
+          <div style="background: rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1rem; text-align: center; backdrop-filter: blur(10px);">
+            <span style="font-size: 1.5rem; display: block; margin-bottom: 0.5rem; line-height: 1;">🏛️</span>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; opacity: 0.8; margin: 0 0 0.25rem 0; color: white;">Borough</div>
+            <div style="font-size: 1rem; font-weight: 800; margin: 0; line-height: 1.2; color: white;">${location.district}</div>
           </div>
         `;
       }
     }
 
-    return `<div class="result-data">${html}</div>`;
+    return html;
   }
 
   function showResult(message: string, type: 'success' | 'error' | 'not-banana' | 'loading') {
