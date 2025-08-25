@@ -39,12 +39,69 @@
   }
 
   @media (max-width: 768px) {
+    .map-container {
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-radius: 16px;
+    }
+
+    .map-container h2 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
     .map {
-      height: 300px;
+      height: 280px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .map-caption {
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      line-height: 1.4;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .map-container {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+    }
+
+    .map-container h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .map {
+      height: 250px;
+      border-radius: 10px;
+    }
+
+    .map-caption {
+      font-size: 0.8rem;
+      margin-top: 0.8rem;
+    }
+  }
+
+  /* Touch device optimizations for map */
+  @media (hover: none) and (pointer: coarse) {
+    .map {
+      /* Better touch interaction */
+      touch-action: manipulation;
+    }
+  }
+
+  /* Landscape mobile - smaller map height */
+  @media (max-width: 768px) and (orientation: landscape) {
+    .map {
+      height: 200px;
     }
     
     .map-container {
-      padding: 1rem;
+      margin-bottom: 1rem;
     }
   }
 </style>
@@ -90,14 +147,17 @@
     }
   }).addTo(map);
 
-  // Add a custom control for map info
+  // Add a custom control for map info (responsive)
   const mapInfo = new L.Control({ position: 'topright' });
   mapInfo.onAdd = function (map) {
     const div = L.DomUtil.create('div', 'map-info');
+    
+    // Check if mobile device
+    const isMobile = window.innerWidth <= 768;
+    
     div.innerHTML = `
       <div style="background: white; padding: 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 0.85rem;">
-        <strong style="color: #2d3748;">🍌 Banana Zone</strong><br>
-        <span style="color: #718096;">Central London's premium areas</span>
+        <strong style="color: #2d3748;">🍌 Banana Zone</strong>
       </div>
     `;
     return div;
