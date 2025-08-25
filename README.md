@@ -2,6 +2,8 @@
 
 A fun web application built with Astro that checks if a London postcode is within the famous "London Banana" zone - the curved area of central London's most desirable and expensive neighborhoods.
 
+🚀 **Try it live at: https://argjendhaxhiu.github.io/londonbanana/**
+
 ## What is the London Banana?
 
 *"This is the London Banana. As long as you stay within the Banana, you'll have a great time in London. Almost everything outside the Banana is horrible these days, best avoid. Not clear why, or when this happened. But it is what it is."*
