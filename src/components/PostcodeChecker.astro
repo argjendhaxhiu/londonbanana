@@ -427,6 +427,11 @@
 <script>
   import { checkPostcodeWithData } from '../utils/postcodeChecker.ts';
 
+  // TypeScript declaration for gtag
+  declare global {
+    function gtag(...args: any[]): void;
+  }
+
   const form = document.getElementById('postcodeForm') as HTMLFormElement;
   const input = document.getElementById('postcodeInput') as HTMLInputElement;
   const result = document.getElementById('result') as HTMLDivElement;
@@ -511,7 +516,24 @@
       
       if (!checkResult.isValid) {
         showResult(checkResult.message, 'error');
+        // Track invalid postcode searches
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'postcode_search', {
+            'search_term': postcode,
+            'result_type': 'invalid'
+          });
+        }
         return;
+      }
+
+      // Track successful postcode searches
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'postcode_search', {
+          'search_term': checkResult.normalizedPostcode,
+          'result_type': checkResult.isInBanana ? 'banana_zone' : 'non_banana_zone',
+          'house_price': checkResult.additionalData?.housePriceAverage || 0,
+          'crime_rate': checkResult.additionalData?.crimeRate || 0
+        });
       }
 
       // Format the result with structured HTML

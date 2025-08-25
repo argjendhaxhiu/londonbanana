@@ -3,6 +3,14 @@ import PostcodeChecker from '../components/PostcodeChecker.astro';
 import LondonMap from '../components/LondonMap.astro';
 
 const baseUrl = import.meta.env.BASE_URL;
+
+// TypeScript declarations for Google Analytics
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+  function gtag(...args: any[]): void;
+}
 ---
 
 <!DOCTYPE html>
@@ -14,6 +22,15 @@ const baseUrl = import.meta.env.BASE_URL;
     <title>London Banana Zone Checker | Are you in the banana?</title>
     <link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1SL8Q8VHY6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(...args: any[]){window.dataLayer.push(args);}
+      gtag('js', new Date());
+      gtag('config', 'G-1SL8Q8VHY6');
+    </script>
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
