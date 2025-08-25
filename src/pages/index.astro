@@ -1,0 +1,84 @@
+---
+import PostcodeChecker from '../components/PostcodeChecker.astro';
+import LondonMap from '../components/LondonMap.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Check if your London postcode is in the famous 'banana' zone - the curved area of central London's most desirable neighborhoods." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>London Banana Zone Checker | Are you in the banana?</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://london-banana-checker.netlify.app/" />
+    <meta property="og:title" content="London Banana Zone Checker" />
+    <meta property="og:description" content="Check if your London postcode is in the famous 'banana' zone!" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://london-banana-checker.netlify.app/" />
+    <meta property="twitter:title" content="London Banana Zone Checker" />
+    <meta property="twitter:description" content="Check if your London postcode is in the famous 'banana' zone!" />
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <LondonMap />
+        <PostcodeChecker />
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  html {
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+    min-height: 100vh;
+  }
+  
+  body {
+    margin: 0;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+  }
+  
+  main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 1rem 0.5rem;
+    }
+    
+    .container {
+      border-radius: 12px;
+      padding: 1rem;
+    }
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+// No server-side logic needed for this component
+---
+
+<div class="map-container">
+  <h2>🗺️ London Banana Zone Map</h2>
+  <div id="map" class="map"></div>
+  <p class="map-caption">The highlighted yellow area shows the London Banana zone. Click and drag to explore!</p>
+</div>
+
+<style>
+  .map-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  }
+
+  .map-container h2 {
+    margin: 0 0 1rem 0;
+    color: #2d3748;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .map {
+    height: 400px;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid #e2e8f0;
+  }
+
+  .map-caption {
+    margin: 0.75rem 0 0 0;
+    color: #718096;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .map {
+      height: 300px;
+    }
+    
+    .map-container {
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script>
+  import L from 'leaflet';
+  import { LONDON_BANANA_GEOJSON, LONDON_CENTER, LONDON_BOUNDS } from '../utils/bananaGeoData.ts';
+
+  // Initialize the map
+  const map = L.map('map', {
+    center: [LONDON_CENTER.lat, LONDON_CENTER.lng],
+    zoom: 9
+  });
+
+  // Add OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // Style for the banana zone
+  const bananaStyle = {
+    fillColor: '#FFD700',
+    weight: 3,
+    opacity: 1,
+    color: '#FFA500',
+    dashArray: '',
+    fillOpacity: 0.4
+  };
+
+  // Add the banana zone to the map
+  const bananaLayer = L.geoJSON(LONDON_BANANA_GEOJSON, {
+    style: bananaStyle,
+    onEachFeature: function (feature, layer) {
+      if (feature.properties && feature.properties.name) {
+        layer.bindPopup(`
+          <div style="text-align: center; padding: 0.5rem;">
+            <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">🍌 ${feature.properties.name}</h3>
+            <p style="margin: 0; color: #4a5568; font-size: 0.9rem;">${feature.properties.description}</p>
+          </div>
+        `);
+      }
+    }
+  }).addTo(map);
+
+  // Add a custom control for map info
+  const mapInfo = new L.Control({ position: 'topright' });
+  mapInfo.onAdd = function (map) {
+    const div = L.DomUtil.create('div', 'map-info');
+    div.innerHTML = `
+      <div style="background: white; padding: 0.75rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); font-size: 0.85rem;">
+        <strong style="color: #2d3748;">🍌 Banana Zone</strong><br>
+        <span style="color: #718096;">Central London's premium areas</span>
+      </div>
+    `;
+    return div;
+  };
+  mapInfo.addTo(map);
+
+  // Fit the map to show the banana zone with more padding for better view
+  map.fitBounds(bananaLayer.getBounds(), { padding: [50, 50] });
+</script>
