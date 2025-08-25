@@ -1,6 +1,8 @@
 ---
 import PostcodeChecker from '../components/PostcodeChecker.astro';
 import LondonMap from '../components/LondonMap.astro';
+
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <!DOCTYPE html>
@@ -10,18 +12,18 @@ import LondonMap from '../components/LondonMap.astro';
     <meta name="description" content="Check if your London postcode is in the famous 'banana' zone - the curved area of central London's most desirable neighborhoods." />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>London Banana Zone Checker | Are you in the banana?</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${baseUrl}favicon.svg`} />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://london-banana-checker.netlify.app/" />
+    <meta property="og:url" content="https://argjendhaxhiu.github.io/londonbanana/" />
     <meta property="og:title" content="London Banana Zone Checker" />
     <meta property="og:description" content="Check if your London postcode is in the famous 'banana' zone!" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://london-banana-checker.netlify.app/" />
+    <meta property="twitter:url" content="https://argjendhaxhiu.github.io/londonbanana/" />
     <meta property="twitter:title" content="London Banana Zone Checker" />
     <meta property="twitter:description" content="Check if your London postcode is in the famous 'banana' zone!" />
   </head>
