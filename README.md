@@ -96,6 +96,12 @@ This application can be deployed to any static hosting service:
 
 Simply run `npm run build` and upload the `dist/` folder.
 
+## Data Sources
+
+- **House Prices**: HM Land Registry Price Paid Data, Rightmove/Zoopla market reports (2024)
+- **Crime Data**: Police.uk API - Official UK police crime statistics
+- **Geographic Data**: Postcodes.io API - UK postcode lookup service
+
 ## Contributing
 
 Fancy helping out? Feel free to submit issues and pull requests to improve the postcode coverage or add brilliant new features!
