@@ -16,10 +16,8 @@ Inspired by [@Saul_Sadka's viral tweet](https://x.com/Saul_Sadka/status/19596091
 - 🍌 Instant London Banana zone checking
 - 💰 Average house price data for each postcode
 - 🚔 Crime rate information with severity ratings
-- 📍 District and location details
+- 📍 Borough and location details
 - 📱 Responsive design that works on all devices
-- 🎨 Modern flat design with beautiful colours and animations
-- ⚡ Fast client-side processing with comprehensive data
 
 ## London Banana Zone Coverage
 
@@ -77,7 +75,7 @@ The built site will be in the `dist/` folder, ready to be deployed to any static
    - 🍌 London Banana zone status
    - 💰 Average house prices
    - 🚔 Crime rate and safety information
-   - 📍 District details
+   - 📍 Borough details
 
 ## Technology Stack
 
