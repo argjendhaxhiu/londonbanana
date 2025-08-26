@@ -35,8 +35,9 @@
     <h2>About the London Banana</h2>
     <p>"This is the London Banana. As long as you stay within the Banana, you'll have a great time in London. Almost everything outside the Banana is horrible these days, best avoid. Not clear why, or when this happened. But it is what it is."</p>
     <p class="citation">Inspired by <a href="https://x.com/Saul_Sadka/status/1959609109939892706/" target="_blank" rel="noopener noreferrer">@Saul_Sadka's viral tweet</a></p>
-    <p class="privacy-note">This site uses Google Analytics to understand usage patterns. No personal data is stored.</p>
   </div>
+  
+  <div class="privacy-note">This site uses Google Analytics to understand usage patterns. No personal data is stored.</div>
 </div>
 
 <style>
@@ -439,11 +440,17 @@
   }
 
   .privacy-note {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #a0aec0;
-    font-style: italic;
-    margin-top: 0.5rem !important;
     text-align: center;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+    background: #fafafa;
+    border-radius: 0 0 20px 20px;
+    margin-left: -2.5rem;
+    margin-right: -2.5rem;
+    margin-bottom: -2.5rem;
   }
 
   /* Enhanced Mobile Optimization */
@@ -454,6 +461,13 @@
       border-radius: 16px;
       max-width: 100%;
       box-sizing: border-box;
+    }
+
+    .privacy-note {
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      margin-bottom: -1.5rem;
+      font-size: 0.65rem;
     }
 
     .header-section {
