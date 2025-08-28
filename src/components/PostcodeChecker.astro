@@ -728,10 +728,17 @@
 
   async function handleSubmit(e: Event) {
     e.preventDefault();
+    
+    // Format the postcode before processing
+    isFormatting = true;
+    const formattedValue = formatPostcode(input.value);
+    input.value = formattedValue;
+    isFormatting = false;
+    
     const postcode = input.value.trim();
     
     if (!postcode) {
-              showResult('Please enter a postcode', 'error');
+      showResult('Please enter a postcode', 'error');
       return;
     }
 
@@ -790,17 +797,32 @@
     return cleaned;
   }
 
+  // Simplified approach - no real-time formatting to avoid cursor issues
+  // Only format on blur and submit
+  let isFormatting = false;
+  
   input.addEventListener('input', (e) => {
     const target = e.target as HTMLInputElement;
-    const cursorPosition = target.selectionStart;
-    const formattedValue = formatPostcode(target.value);
     
-    target.value = formattedValue;
-    
-    // Restore cursor position
-    if (cursorPosition !== null) {
-      target.setSelectionRange(cursorPosition, cursorPosition);
+    // Only convert to uppercase, no spacing while typing
+    if (!isFormatting) {
+      const cursorPosition = target.selectionStart || 0;
+      const upperValue = target.value.toUpperCase();
+      
+      if (upperValue !== target.value) {
+        target.value = upperValue;
+        target.setSelectionRange(cursorPosition, cursorPosition);
+      }
     }
+  });
+
+  // Format on blur (when user finishes typing)
+  input.addEventListener('blur', (e) => {
+    const target = e.target as HTMLInputElement;
+    isFormatting = true;
+    const formattedValue = formatPostcode(target.value);
+    target.value = formattedValue;
+    isFormatting = false;
   });
 
   form.addEventListener('submit', handleSubmit);
